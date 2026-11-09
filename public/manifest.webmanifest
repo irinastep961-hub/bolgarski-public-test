@@ -1,0 +1,16 @@
+{
+  "name": "Болгарский без страха",
+  "short_name": "Без страха",
+  "description": "Тренажёр для практики болгарского. Практикуйся. Повторяй. Начинай говорить",
+  "lang": "ru",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#e8f2f5",
+  "theme_color": "#1b8bb0",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
