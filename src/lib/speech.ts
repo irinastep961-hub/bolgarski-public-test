@@ -140,13 +140,53 @@ function reportVoiceProblem(reason: SpeakResult): void {
  * Произносит болгарский текст выбранным болгарским голосом.
  * При отсутствии голоса ничего не произносит и (если не quiet) показывает сообщение.
  */
-export async function speak(text: string, opts: { quiet?: boolean; hints?: boolean } = {}): Promise<SpeakResult> {
+const LESSON_AUDIO: Record<string, string> = {
+  'здравей': '/audio/L01_01.mp3',
+  'здравейте': '/audio/L01_02.mp3',
+  'добро утро': '/audio/L01_03.mp3',
+  'добър вечер': '/audio/L01_04.mp3',
+  'довиждане': '/audio/L01_05.mp3',
+  'благодаря': '/audio/L01_06.mp3',
+  'моля': '/audio/L01_07.mp3',
+  'извинете': '/audio/L01_08.mp3',
+  'казвам се ана': '/audio/L01_Q04.mp3',
+  'извинете къде е гарата': '/audio/L01_Q05.mp3',
+  'здравейте как се казвате': '/audio/L01_Q06.mp3',
+};
+
+function normalizeAudioText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[.,!?;:…]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export async function speak(
+  text: string,
+  opts: { quiet?: boolean; hints?: boolean } = {}
+): Promise<SpeakResult> {
+  const audioPath = LESSON_AUDIO[normalizeAudioText(text)];
+
+  if (audioPath) {
+    try {
+      const audio = new Audio(audioPath);
+      await audio.play();
+      return 'ok';
+    } catch {
+      // Если MP3 не удалось воспроизвести, используем браузерный голос.
+    }
+  }
+
   const hintsOn = opts.hints ?? getStressHints();
   const result = await speakWith(browserEngine(), text, {
     preferredURI: getPreferredVoice(),
     loadVoices: waitForVoices,
-    prepare: (t) => speechText(t, hintsOn), // на экране остаётся обычное написание, подсказка уходит только в голос
+    prepare: (t) => speechText(t, hintsOn),
   });
+
   if ((result === 'no-voice' || result === 'unsupported') && !opts.quiet) reportVoiceProblem(result);
   return result;
 }
+ 
+
