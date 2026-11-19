@@ -6,7 +6,7 @@ export const APP_NAME = 'Болгарский без страха';
 export const APP_MOTTO = 'Практикуйся. Повторяй. Начинай говорить';
 
 /** Сколько первых уроков открыто бесплатно для всех */
-export const FREE_LESSONS_COUNT = 11;
+export const FREE_LESSONS_COUNT = 10;
 
 /** Страница в Facebook для отзывов и сообщений об ошибках (открывается в новой вкладке) */
 export const FEEDBACK_URL = 'https://www.facebook.com/profile.php?id=100004611274369';
